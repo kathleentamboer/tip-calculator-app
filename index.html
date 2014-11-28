@@ -11,17 +11,17 @@
     <section class="bill">
       <header class="group">
         <h1>Bill</h1>
-        <button>Reset</button>
+        <button id="reset">Reset</button>
       </header>
       <label>
-        <input id="input-bill" type="text" value="0.00">
+        <input id="input-bill" type="number" value="0.00">
       </label>
     </section>
 
     <section class="percent">
       <div class="percent-number group">
-        <output class="percent-number-output" for="percent-range" id="output-percent">50</output>
-        <input class="percent-slider" type="range" min="0" max="50" value="50" id="input-percent" step="1">
+        <output class="percent-number-output" for="percent-range" id="output-percent">15</output>
+        <input class="percent-slider" type="range" min="0" max="50" value="15" id="input-percent" step="1">
       </div>
       <ul class="percent-numbers group">
         <li><button data-percent="15">15%</button></li>
@@ -33,19 +33,19 @@
     <section class="tip">
       <h1>Tip</h1>
       <label>
-        <input id="input-tip" type="text" value="0.00">
+        <input id="input-tip" type="number" value="0.00">
       </label>
     </section>
 
     <section class="round group">
-      <button>Round</button>
-      <button>Round</button>
+      <button data-round="down">Round</button>
+      <button data-round="up">Round</button>
     </section>
 
     <section class="total">
       <h1>Total</h1>
       <label>
-        <input id="input-total" type="text" value="0.00">
+        <input id="input-total" type="number" value="0.00">
       </label>
     </section>
     </main>
@@ -77,8 +77,12 @@
 
     var $percentButtons = $(".percent-numbers button");
 
+    var $roundButtons = $(".round button");
+
+    var $reset = $("#reset")
+
     var bill = 0;
-    var percent = 0;
+    var percent = 0.15;
     var tip = 0;
     var total = 0;
 
@@ -92,6 +96,17 @@
       $inputPercent.val(Math.round(percent * 100));
       $outputPercent.html(Math.round(percent  * 100));
     };
+
+
+    $reset.on("click" , function(event){
+      bill = 0;
+      percent = 0.15;
+      tip = 0;
+      total = 0;
+      $inputBill.val(twoDigits(bill));
+      updateTip();
+      updateSlider(percent);
+    });
 
     $inputBill.on("change", function(event){
       bill = parseFloat($(this).val());
@@ -117,6 +132,18 @@
       updateTip();
     });
 
+    $roundButtons.on("click", function(event){
+      var $button = $(this);
+      var round = $button.attr("data-round");
+      if (round == "up"){
+        tip = Math.ceil(tip);
+      } else {
+        tip = Math.floor(tip);
+      }
+      updateTip();
+      percent = (tip / bill);
+      updateSlider(percent);
+    });
 
   });
 

@@ -20,7 +20,7 @@ button {
   width: 100%;
 }
 
-input[type="text"] {
+input[type="number"] {
   display: block;
   width: 100%;
   text-align: right;
@@ -67,7 +67,7 @@ body {
 
 .container {
   margin: 0 auto;
-  max-width: 370px;
+  max-width: 400px;
   background: white;
   padding: 15px 0 25px 0;
 }
@@ -141,7 +141,6 @@ body {
 .percent-slider::-webkit-slider-thumb {
   -webkit-appearance: none;
     height: 25px;
-    box-shadow: 1px 1px 1px gray;
     width: 25px;
     border-radius: 100px;
     background: #0000ff;
