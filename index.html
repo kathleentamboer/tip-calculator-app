@@ -20,13 +20,13 @@
 
     <section class="percent">
       <div class="percent-number group">
-        <output class="percent-number-output" for="percent-range" id="percent-output">50</output>
-        <input class="percent-slider" type="range" min="0" max="50" value="50" id="percent-range" step="1">
+        <output class="percent-number-output" for="percent-range" id="output-percent">50</output>
+        <input class="percent-slider" type="range" min="0" max="50" value="50" id="input-percent" step="1">
       </div>
       <ul class="percent-numbers group">
-        <li><button>15%</button></li>
-        <li><button>20%</button></li>
-        <li><button>25%</button></li>
+        <li><button data-percent="15">15%</button></li>
+        <li><button data-percent="25">25%</button></li>
+        <li><button data-percent="20">20%</button></li>
       </ul>
     </section>
 
@@ -52,9 +52,75 @@
 
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 
-    <script>
+<script>
 
-    </script>
+  var twoDigits = function(number){
+    if(number == 0){
+      return "0.00";
+    }
+    number = Math.round(number * 100);
+    console.log(number);
+    var string = "" + number;
+    var dollars = string.slice(0, -2);
+    var cents = string.slice(-2);
+    return dollars + "." + cents;
+  }
+
+
+  $(document).on("ready", function(){
+
+    var $inputBill = $("#input-bill");
+    var $inputTip = $("#input-tip");
+    var $inputPercent = $("#input-percent");
+    var $inputTotal = $("#input-total");
+    var $outputPercent = $("#output-percent");
+
+    var $percentButtons = $(".percent-numbers button");
+
+    var bill = 0;
+    var percent = 0;
+    var tip = 0;
+    var total = 0;
+
+    var updateTip = function(){
+      total = tip + bill;
+      $inputTip.val(twoDigits(tip));
+      $inputTotal.val(twoDigits(total));
+    };
+
+    var updateSlider = function(percent){
+      $inputPercent.val(Math.round(percent * 100));
+      $outputPercent.html(Math.round(percent  * 100));
+    };
+
+    $inputBill.on("change", function(event){
+      bill = parseFloat($(this).val());
+      console.log(bill);
+      updateTip();
+    });
+
+    $inputPercent.on("change", function(event){
+      percent = parseFloat($(this).val()) / 100;
+      console.log(percent);
+      tip = bill * percent;
+      console.log(tip);
+      $outputPercent.html(Math.round(percent  * 100));
+      updateTip();
+    });
+
+    $percentButtons.on("click", function(event){
+      var $button = $(this);
+      console.log($button);
+      percent = parseFloat( $button.attr("data-percent")) / 100;
+      tip = bill * percent;
+      updateSlider(percent);
+      updateTip();
+    });
+
+
+  });
+
+</script>
 
 </body>
 </html>
