@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
   <title>Nice Numbers</title>
   <script src="//use.typekit.net/zap1aww.js"></script>
   <script>try{Typekit.load();}catch(e){}</script>
@@ -39,17 +40,18 @@
       </label>
     </section>
 
-    <section class="round group">
-      <button data-round="down">Round</button>
-      <button data-round="up">Round</button>
-    </section>
-
     <section class="total">
       <h1>Total</h1>
       <label>
         <input id="input-total" type="number" value="0.00">
       </label>
     </section>
+
+    <section class="round group">
+      <button data-round="down">Round</button>
+      <button data-round="up">Round</button>
+    </section>
+
     </main>
 
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
@@ -97,6 +99,16 @@
     var updateSlider = function(percent){
       $inputPercent.val(Math.round(percent * 100));
       $outputPercent.html(Math.round(percent  * 100));
+
+      $percentButtons.each(function(){
+        var $button = $(this);
+        console.log($button);
+        if ($button.attr("data-percent") == percent * 100){
+          $button.addClass("active");
+        } else {
+          $button.removeClass("active");
+        }
+      });
     };
 
 
@@ -138,14 +150,31 @@
       var $button = $(this);
       var round = $button.attr("data-round");
       if (round == "up"){
-        tip = Math.ceil(tip);
+        total = Math.ceil(total);
       } else {
-        tip = Math.floor(tip);
+        total = Math.floor(total);
       }
+      tip = total - bill;
       updateTip();
       percent = (tip / bill);
       updateSlider(percent);
     });
+
+    $inputTotal.on("change" , function(event){
+      total = parseFloat($(this).val());
+      tip = total - bill;
+      percent = (tip / bill);
+      updateTip();
+      updateSlider(percent);
+    });
+
+    $inputTip.on("change" , function(event){
+      tip = parseFloat($(this).val());
+      total = bill + tip;
+      percent = (tip / bill);
+      updateTip();
+      updateSlider(percent);
+    })
 
   });
 

@@ -30,6 +30,12 @@ input[type="number"] {
   color: #4A4A4A;
 }
 
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
 label {
   position: relative;
 }
@@ -41,13 +47,13 @@ label:before {
   top: 15px;
   left: 20px;
   content: "$";
-  color: #D6D6D6;
+  color: #ccc;
   z-index: 1;
 }
 
 h1 {
   font-size: 15px;
-  color: #D6D6D6;
+  color: #ccc;
   text-transform: uppercase;
   padding: 10px 0 10px 20px;
 }
@@ -69,7 +75,7 @@ body {
   margin: 0 auto;
   max-width: 400px;
   background: white;
-  padding: 15px 0 25px 0;
+  padding: 15px 0 0 0;
 }
 
 .bill {
@@ -96,7 +102,7 @@ body {
 
 .bill button:after {
   content: "×";
-  font-size: 11px;
+  font-size: 12px;
   color: white;
   display: block;
   position: absolute;
@@ -121,9 +127,8 @@ body {
 }
 
 .percent-number-output {
-  color: #0000ff;
+  color: #ccc;
   float: left;
-  width: 33.33%;
   display: block;
 }
 
@@ -132,10 +137,11 @@ body {
 }
 
 .percent-slider {
-  width: 66.66%;
-  float: right;
    -webkit-appearance: none;
-   position: relative;
+   margin: 10px 0 0 0;
+   float: right;
+   display: block;
+   width: 75%;
 }
 
 .percent-slider::-webkit-slider-thumb {
@@ -155,8 +161,6 @@ body {
   border-radius: 100px;
   cursor: pointer;
   height: 8px;
-  position: relative;
-  top: 11px;
 }
 
 .percent-numbers button {
@@ -189,7 +193,8 @@ body {
   margin: auto;
 }
 
-.percent-numbers button:hover {
+.percent-numbers button:hover,
+.percent-numbers button.active {
   background: #0000ff;
   color: white;
 }
@@ -200,7 +205,8 @@ body {
 
 .round button {
   float: left;
-  padding: 20px;
+  position: relative;
+  padding: 20px 20px 20px 50px;
   color: #0000ff;
   text-transform: uppercase;
   font-size: 23px;
@@ -212,7 +218,7 @@ body {
 }
 
 .round button:last-child {
-  padding-left: 25px;
+  padding-left: 55px;
 }
 
 .round button:hover {
@@ -220,12 +226,21 @@ body {
   color: white;
 }
 
+.round button:first-child:before,
+.round button:last-child:before {
+  display: block;
+  position: absolute;
+}
+
 .round button:first-child:before {
-  content: "▼ ";
+  content: "▲";
+  -webkit-transform: rotate(180deg);
+  left: 20px;
 }
 
 .round button:last-child:before {
-  content: "▲ ";
+  content: "▲";
+  left: 25px;
 }
 
 .round button:last-child {
