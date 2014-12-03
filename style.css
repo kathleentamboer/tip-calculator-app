@@ -178,19 +178,21 @@ body {
   padding-left: 25px;
 }
 
+.percent-numbers {
+  text-align: center;
+}
+
 .percent-numbers li:first-child {
   float: left;
 }
 
 .percent-numbers li:nth-child(2) {
   float: right;
-  padding-left: 25px;
 }
 
 
 .percent-numbers li:last-child {
-  width: 110px;
-  margin: auto;
+  display: inline-block;
 }
 
 .percent-numbers button:hover,
@@ -221,7 +223,8 @@ body {
   padding-left: 55px;
 }
 
-.round button:hover {
+.round button:hover,
+.round button.active {
   background: #0000ff;
   color: white;
 }

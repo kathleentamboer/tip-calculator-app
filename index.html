@@ -125,7 +125,9 @@
     $inputBill.on("change", function(event){
       bill = parseFloat($(this).val());
       console.log(bill);
+      tip = bill * percent;
       updateTip();
+      updateSlider(percent);
     });
 
     $inputPercent.on("change", function(event){
@@ -133,8 +135,9 @@
       console.log(percent);
       tip = bill * percent;
       console.log(tip);
-      $outputPercent.html(Math.round(percent  * 100));
+
       updateTip();
+      updateSlider(percent);
     });
 
     $percentButtons.on("click", function(event){
@@ -158,6 +161,10 @@
       updateTip();
       percent = (tip / bill);
       updateSlider(percent);
+
+      $roundButtons.removeClass("active");
+      $button.addClass("active");
+
     });
 
     $inputTotal.on("change" , function(event){
