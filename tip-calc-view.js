@@ -1,14 +1,14 @@
 var TipCalcView = function(){
   this.tipCalc = new TipCalc(0, 0, 15, 0);
-  this.round = null;
-  this.preRoundAmount = null;
 
+  this.clearRound();
   this.listen();
   this.update();
 }
 
 TipCalcView.prototype.clickReset = function(event){
   this.tipCalc = new TipCalc(0, 0, 15, 0);
+  this.clearRound();
   this.update();
 }
 
